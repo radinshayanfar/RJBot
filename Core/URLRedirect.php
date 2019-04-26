@@ -12,7 +12,7 @@ class URLRedirect
 
     /**
      * URLRedirect constructor.
-     * @param $rawURL URL to be followed
+     * @param $rawURL string URL to be followed
      */
     public function __construct($rawURL)
     {
@@ -36,7 +36,7 @@ class URLRedirect
         return $this->data;
     }
 
-    function URLRedirecting()
+    private function URLRedirecting()
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->rawURL);
