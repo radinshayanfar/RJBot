@@ -1,2 +1,4 @@
 # RJBot
-RadioJavan.com downloader Telegram bot
+A simple Telegram bot to extract media links from Radio Javan share link.
+
+https://t.me/RJ_DownloadBot
