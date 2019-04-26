@@ -21,6 +21,8 @@ class Video extends Media
     {
         $this->hostFetchURL = '/videos/video_host';
         Media::__construct($url);
+        $this->processID();
+        $this->processHost();
         $this->processQualities();
         $this->generateLinks();
     }

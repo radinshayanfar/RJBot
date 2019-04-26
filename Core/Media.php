@@ -23,14 +23,13 @@ abstract class Media
     protected function __construct($url)
     {
         $this->url = $url;
-        $this->processID();
-        $this->processHost();
+
     }
 
     /**
      * Processes media ID and assign it to $id
      */
-    private function processID()
+    protected function processID()
     {
         $path_parts = explode('/', parse_url($this->url->getRedirectedURL(), PHP_URL_PATH));
         $this->id = end($path_parts);
@@ -40,7 +39,7 @@ abstract class Media
      * Processes media host and assign it to $host
      * @throws Exception If failed to fetch host
      */
-    private function processHost()
+    protected function processHost()
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://www.radiojavan.com' . $this->hostFetchURL);

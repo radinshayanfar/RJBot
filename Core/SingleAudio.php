@@ -21,6 +21,8 @@ class SingleAudio extends Audio
         $this->hostFetchURL = $hostFetchURL;
         Media::__construct($url);
         Audio::__construct();
+        $this->processID();
+        $this->processHost();
         $this->generateLinks();
     }
 
