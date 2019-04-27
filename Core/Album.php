@@ -22,8 +22,8 @@ class Album extends Audio
         $this->hostFetchURL = Audio::MP3_HOST;
         Media::__construct($url);
         Audio::__construct();
-        $this->processID();
-        $this->processHost();
+//        $this->processID();
+//        $this->processHost();
         $this->processTracks();
         $this->generateLinks();
     }
@@ -36,10 +36,10 @@ class Album extends Audio
 
     protected function generateLinks()
     {
-        $path = substr($this->currentMP3URL, 0, strrpos($this->currentMP3URL, '/'));
+//        $path = substr($this->currentMP3URL, 0, strrpos($this->currentMP3URL, '/'));
         foreach ($this->tracksNames as $track)
         {
-            $this->links[str_replace('-', ' ', $track)] = $this->host . '/media/' . $path . '/' . $track . '.mp3';
+            $this->links[$track] = 'https://www.radiojavan.com/mp3s/mp3/' . $track;
         }
     }
 
