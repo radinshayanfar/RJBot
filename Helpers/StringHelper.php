@@ -4,7 +4,7 @@
 namespace Helper;
 
 
-class StringHelper
+final class StringHelper
 {
 
     /**

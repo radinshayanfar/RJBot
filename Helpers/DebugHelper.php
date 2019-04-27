@@ -4,7 +4,7 @@
 namespace Helper;
 
 
-class DebugHelper
+final class DebugHelper
 {
     /**
      * @param $var mixed variable which dumps to file

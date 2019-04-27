@@ -4,7 +4,7 @@
 namespace Helper;
 
 
-class URLHelper
+final class URLHelper
 {
 
     /**
