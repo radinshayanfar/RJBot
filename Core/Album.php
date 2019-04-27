@@ -54,4 +54,18 @@ class Album extends Audio
             $this->tracksNames[] = $track['mp3'];
         }
     }
+
+    public function send($bot, $update, $caption)
+    {
+        $chat_id = $update['message']['chat']['id'];
+        $message_id = $update['message']['message_id'];
+        $text = 'Select track:';
+        $inline_keyboard_key = array();
+        foreach ($this->getLinks() as $name => $link) {
+            $inline_keyboard_key[] = [['text' => str_replace('-', ' ', $name), 'callback_data' => '1']];
+        }
+        $resp = array ('chat_id' => $chat_id, 'text' => $text, 'reply_to_message_id' => $message_id,
+            'reply_markup' => array('inline_keyboard' => $inline_keyboard_key));
+        $bot->postSend('sendMessage', $resp);
+    }
 }

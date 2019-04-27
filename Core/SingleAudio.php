@@ -35,4 +35,20 @@ class SingleAudio extends Audio
         $readableName = str_replace('-', ' ', $this->id);
         $this->links[$readableName] = $this->host . '/media/' . $this->currentMP3URL. '.mp3';
     }
+
+
+    public function send($bot, $update, $caption)
+    {
+        $document = reset($this->getLinks());
+        $chat_id = $update['message']['chat']['id'];
+        $message_id = $update['message']['message_id'];
+        if ($this->hostFetchURL == self::MP3_HOST) {
+            $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'document' => $document,
+                'caption' => $caption);
+            $bot->postSend('sendDocument', $resp);
+        }
+        $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $document
+        , 'disable_web_page_preview' => true);
+        $bot->postSend('sendMessage', $resp);
+    }
 }

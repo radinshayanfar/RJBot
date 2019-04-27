@@ -65,5 +65,6 @@ abstract class Media
 
     abstract protected function generateLinks();
 
+    abstract public function send($bot, $update, $caption);
 
 }

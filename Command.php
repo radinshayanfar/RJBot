@@ -77,51 +77,20 @@ function downloader($update)
             throw new Exception('Can\'t get media.');
         $url = new URLRedirect($originalText);
         $caption = '@RJ_DownloadBot';
+        $media = null;
         if ($mediaType == MediaType::MUSIC) {
             $media = new SingleAudio($url, Audio::MP3_HOST);
-            $document = reset($media->getLinks());
-            $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'document' => $document,
-                'caption' => $caption);
-            $bot->postSend('sendDocument', $resp);
-            $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $document
-            , 'disable_web_page_preview' => true);
-            $bot->postSend('sendMessage', $resp);
         }
         if ($mediaType == MediaType::VIDEO) {
             $media = new Video($url);
-            $message = '';
-            foreach ($media->getLinks() as $name => $link) {
-                $message .= $name . ': ' . $link . "\n";
-            }
-            $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $message
-            , 'disable_web_page_preview' => true);
-            $bot->postSend('sendMessage', $resp);
         }
         if ($mediaType == MediaType::PODCAST) {
             $media = new SingleAudio($url, Audio::PODCAST_HOST);
-            $document = reset($media->getLinks());
-            $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'document' => $document,
-                'caption' => $caption);
-            $bot->postSend('sendDocument', $resp);
-            $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $document
-            , 'disable_web_page_preview' => true);
-            $bot->postSend('sendMessage', $resp);
         }
         if ($mediaType == MediaType::ALBUM) {
             $media = new Album($url);
-            /*foreach ($media->getLinks() as $name => $link) {
-                $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'document' => $link,
-                    'caption' => $caption);
-                $bot->postSend('sendDocument', $resp);
-            }*/
-            $message = '';
-            foreach ($media->getLinks() as $name => $link) {
-                $message .= $name . ': ' . $link . "\n";
-            }
-            $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $message
-            , 'disable_web_page_preview' => true);
-            $bot->postSend('sendMessage', $resp);
         }
+        $media->send($bot, $update, $caption);
     } catch (Exception $e) {
         $text = $e->getMessage();
         $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $text);

@@ -56,4 +56,17 @@ class Video extends Media
             $this->links[$quality] = $this->host . $link;
         }
     }
+
+    public function send($bot, $update, $caption)
+    {
+        $chat_id = $update['message']['chat']['id'];
+        $message_id = $update['message']['message_id'];
+        $message = '';
+        foreach ($this->getLinks() as $name => $link) {
+            $message .= $name . ': ' . $link . "\n";
+        }
+        $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $message
+        , 'disable_web_page_preview' => true);
+        $bot->postSend('sendMessage', $resp);
+    }
 }
