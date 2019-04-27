@@ -11,11 +11,12 @@ class Database
      * @param $user string DB user
      * @param $password string DB password
      * @param $name string DB name
+     * @throws Exception If failed to connect to database
      */
     public function __construct($host, $user, $password, $name)
     {
-        if ($this->dbConnection = mysqli_connect($host, $user, $password, $name)) ;
-        else
+        $this->dbConnection = mysqli_connect($host, $user, $password, $name);
+        if (!$this->dbConnection)
             throw new Exception('Unable to connect to database');
     }
 

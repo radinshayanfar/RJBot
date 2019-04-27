@@ -6,6 +6,10 @@ define('API_TOKEN', file_get_contents('TOKEN'));
 
 require_once('TelegramAPI.php');
 require_once('DatabaseConfig.php');
+require_once('Database.php');
+require_once('Helpers/DebugHelper.php');
+require_once('Helpers/URLHelper.php');
+require_once('Helpers/StringHelper.php');
 require_once('./Core/URLRedirect.php');
 require_once('./Core/Video.php');
 require_once('./Core/SingleAudio.php');
@@ -18,7 +22,6 @@ $update = json_decode($content, true);
 if (isset($content['edited_message'])) {
     exit;
 }
-
 // Connection to database
 try {
     $db = new Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
