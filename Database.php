@@ -19,7 +19,7 @@ class Database
             throw new Exception('Unable to connect to database');
     }
 
-    function update_count_db($update)
+    function updateCount($update)
     {
         $chat_id = $update['message']['chat']['id'];
         $user_FName = $update['message']['chat']['first_name'];
