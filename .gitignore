@@ -89,5 +89,5 @@ fabric.properties
 # Bot API Token
 TOKEN
 
-# Daatbase connection configuration
-DatabaseConfig.php
+# Database connection configuration
+Database/DatabaseConfig.php
