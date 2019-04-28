@@ -37,7 +37,7 @@ class SingleAudio extends Audio
     }
 
 
-    public function send($api, $message, $caption)
+    public function send($api, $message, $caption = '@RJ_DownloadBot')
     {
         $document = reset($this->getLinks());
         $chat_id = $message['chat']['id'];

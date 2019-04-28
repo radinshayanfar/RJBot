@@ -58,7 +58,7 @@ class Album extends Audio
         }
     }
 
-    public function send($api, $message, $caption)
+    public function send($api, $message, $caption = '@RJ_DownloadBot')
     {
         $chat_id = $message['chat']['id'];
         $message_id = $message['message_id'];

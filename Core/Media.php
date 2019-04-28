@@ -65,6 +65,6 @@ abstract class Media
 
     abstract protected function generateLinks();
 
-    abstract public function send($api, $message, $caption);
+    abstract public function send($api, $message, $caption = '@RJ_DownloadBot');
 
 }

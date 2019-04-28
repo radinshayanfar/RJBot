@@ -20,7 +20,7 @@ class TextMessage
 {
     private $message;
     private $api;
-    private $dbc;
+    private $db;
 
     /**
      * Message constructor.
@@ -32,7 +32,7 @@ class TextMessage
     {
         $this->message = $message;
         $this->api = $api;
-        $this->dbc = $dbc;
+        $this->db = $dbc;
 
         switch ($this->message['text']) {
             case '/start':
@@ -88,7 +88,7 @@ class TextMessage
             else
                 throw new Exception('Can\'t get media.');
             $url = new URLRedirect($originalText);
-            $caption = '@RJ_DownloadBot';
+//            $caption = '@RJ_DownloadBot';
             $media = null;
             if ($mediaType == MediaType::MUSIC) {
                 $media = new SingleAudio($url, Audio::MP3_HOST);
@@ -101,9 +101,10 @@ class TextMessage
             }
             if ($mediaType == MediaType::ALBUM) {
 //            file_put_contents('dump2.txt', $dbc->autoIncrementStart());
-                $media = new Album($url, $this->dbc->autoIncrementStart());
+                $media = new Album($url, $this->db->autoIncrementStart());
+                $this->db->addTracksLink($media->getLinks());
             }
-            $media->send($this->api, $this->message, $caption);
+            $media->send($this->api, $this->message);
         } catch (Exception $e) {
             $text = $e->getMessage();
             $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $text);

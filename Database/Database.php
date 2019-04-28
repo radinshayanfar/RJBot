@@ -55,9 +55,13 @@ class Database
         return $row['link'];
     }
 
-    public function addTrackLinkByID($link)
+    public function addTracksLink($links)
     {
-//        $query = "INSERT INTO tracks (link) VALUES ('{$link}')";
+        foreach ($links as $track => $link)
+        {
+            $query = "INSERT INTO tracks (link) VALUES ('{$link}')";
+            $r = @mysqli_query($this->dbConnection, $query);
+        }
     }
 
 }
