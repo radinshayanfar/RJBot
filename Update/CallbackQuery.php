@@ -7,6 +7,7 @@ namespace Update;
 use Core\SingleAudio;
 use Core\URLRedirect;
 use Database;
+use Exception;
 use TelegramAPI;
 
 class CallbackQuery
@@ -41,8 +42,15 @@ class CallbackQuery
     {
         $data= $this->callback_query['data'];
         $url = new URLRedirect($this->db->getTrackLinkByID($data));
-        $media = new SingleAudio($url, SingleAudio::MP3_HOST);
-        $media->send($this->api, $this->callback_query['message']['reply_to_message']);
+        try {
+            $media = new SingleAudio($url, SingleAudio::MP3_HOST);
+            $media->send($this->api, $this->callback_query['message']['reply_to_message']);
+        } catch (Exception $e) {
+            $text = $e->getMessage();
+            $resp = array('chat_id' => $this->callback_query['message']['chat']['id'],
+                'reply_to_message_id' => $this->callback_query['message']['reply_to_message']['message_id'], 'text' => $text);
+            $this->api->postSend('sendMessage', $resp);
+        }
     }
 
 

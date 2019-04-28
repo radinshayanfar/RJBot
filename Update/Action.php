@@ -48,10 +48,6 @@ class Action
 
     private function callbackQueryProcess() {
         new CallbackQuery($this->update['callback_query'], $this->api, $this->db);
-//        $chat_id = $this->update['callback_query']['message']['chat']['id'];
-//        $data= $this->update['callback_query']['data'];
-//        $resp = array('chat_id' => $chat_id, 'text' => $data);
-//        $this->api->postSend('sendMessage', $resp);
     }
 
 
