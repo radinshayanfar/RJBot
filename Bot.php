@@ -23,10 +23,7 @@ require_once('./Update/Action.php');
 $content = file_get_contents("php://input");
 $update = json_decode($content, true);
 
-if (isset($update['edited_message'])) {
-    exit;
-}
-// Connection to database
+// Database connection
 try {
     $db = new Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $db->updateUserMessageCount($update);
