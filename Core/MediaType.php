@@ -1,7 +1,7 @@
 <?php
 
 
-class MediaType
+final class MediaType
 {
 
     const MUSIC = '54472692470MUSIC';

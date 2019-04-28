@@ -14,6 +14,7 @@ require_once('Helpers/URLHelper.php');
 require_once('Helpers/StringHelper.php');
 require_once('Helpers/Helper.php');
 require_once('./Core/URLRedirect.php');
+include_once('./Core/MediaType.php');
 require_once('./Core/Video.php');
 require_once('./Core/SingleAudio.php');
 require_once('./Core/Album.php');

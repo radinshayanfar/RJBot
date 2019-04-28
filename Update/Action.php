@@ -2,7 +2,6 @@
 
 namespace Update;
 
-include_once('MediaType.php');
 include_once('TextMessage.php');
 include_once('CallbackQuery.php');
 
