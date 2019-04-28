@@ -4,6 +4,7 @@ namespace Update;
 
 include_once('MediaType.php');
 include_once('TextMessage.php');
+include_once('CallbackQuery.php');
 
 use Database;
 use TelegramAPI;
@@ -46,11 +47,11 @@ class Action
     }
 
     private function callbackQueryProcess() {
+        new CallbackQuery($this->update['callback_query'], $this->api, $this->db);
+//        $chat_id = $this->callback_query['message']['chat']['id'];
+//        $data= $this->callback_query['data'];
         $chat_id = $this->update['callback_query']['message']['chat']['id'];
-        $callback_query_id = $this->update['callback_query']['id'];
         $data= $this->update['callback_query']['data'];
-        $resp = array('callback_query_id' => $callback_query_id);
-        $this->api->postSend('answerCallbackQuery', $resp);
         $resp = array('chat_id' => $chat_id, 'text' => $data);
         $this->api->postSend('sendMessage', $resp);
     }

@@ -47,5 +47,17 @@ class Database
         return $row['AUTO_INCREMENT'];
     }
 
+    public function getTrackLinkByID($id): string
+    {
+        $query = "SELECT link FROM tracks WHERE id = {$id} LIMIT 1";
+        $r = @mysqli_query($this->dbConnection, $query);
+        $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+        return $row['link'];
+    }
+
+    public function addTrackLinkByID($link)
+    {
+//        $query = "INSERT INTO tracks (link) VALUES ('{$link}')";
+    }
 
 }
