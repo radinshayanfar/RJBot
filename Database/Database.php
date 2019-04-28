@@ -22,6 +22,9 @@ class Database
 
     public function updateUserMessageCount($update)
     {
+        if (isset($update['callback_query'])) {
+            $update = $update['callback_query'];
+        } else if (!isset($update['message'])) return;
         $chat_id = $update['message']['chat']['id'];
         $user_FName = $update['message']['chat']['first_name'];
         $user_FName = mysqli_real_escape_string($this->dbConnection, $user_FName);
