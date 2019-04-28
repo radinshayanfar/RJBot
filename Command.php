@@ -56,6 +56,7 @@ function determineType($rawURL): string
 function downloader($update)
 {
     global $bot;
+    global $db;
 
     $originalText = $update['message']['text'];
     $chat_id = $update['message']['chat']['id'];
@@ -88,7 +89,8 @@ function downloader($update)
             $media = new SingleAudio($url, Audio::PODCAST_HOST);
         }
         if ($mediaType == MediaType::ALBUM) {
-            $media = new Album($url);
+//            file_put_contents('dump2.txt', $dbc->autoIncrementStart());
+            $media = new Album($url, $db->autoIncrementStart());
         }
         $media->send($bot, $update, $caption);
     } catch (Exception $e) {

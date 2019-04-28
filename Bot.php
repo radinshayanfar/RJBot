@@ -25,10 +25,22 @@ if (isset($content['edited_message'])) {
 // Connection to database
 try {
     $db = new Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-    $db->updateCount($update);
+    $db->updateUserMessageCount($update);
 } catch (Exception $e) {}
 
 $bot = new TelegramAPI(API_TOKEN);
+
+if (isset($update['callback_query'])) {
+    $chat_id = $update['callback_query']['message']['chat']['id'];
+    $callback_query_id = $update['callback_query']['id'];
+    $data= $update['callback_query']['data'];
+    $resp = array('callback_query_id' => $callback_query_id);
+    $bot->postSend('answerCallbackQuery', $resp);
+    $resp = array('chat_id' => $chat_id, 'text' => $data);
+    $bot->postSend('sendMessage', $resp);
+    exit();
+}
+
 if (!isset($update['message']['text'])) {
     $chat_id = $update['message']['chat']['id'];
     $resp = array('chat_id' => $chat_id, 'text' => 'Please send a Radio Javan media link.');

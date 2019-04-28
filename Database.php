@@ -20,7 +20,7 @@ class Database
             throw new Exception('Unable to connect to database');
     }
 
-    function updateCount($update)
+    public function updateUserMessageCount($update)
     {
         $chat_id = $update['message']['chat']['id'];
         $user_FName = $update['message']['chat']['first_name'];
@@ -37,6 +37,14 @@ class Database
             $query = "INSERT INTO subs (chat_id, name) VALUES ({$chat_id}, '{$user_FName}')";
             $r = @mysqli_query($this->dbConnection, $query);
         }
+    }
+
+    public function autoIncrementStart()
+    {
+        $query = 'SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "rjbot" AND TABLE_NAME = "tracks"';
+        $r = @mysqli_query($this->dbConnection, $query);
+        $row = mysqli_fetch_array($r);
+        return $row['AUTO_INCREMENT'];
     }
 
 
