@@ -58,10 +58,10 @@ class Album extends Audio
         }
     }
 
-    public function send($bot, $update, $caption)
+    public function send($api, $message, $caption)
     {
-        $chat_id = $update['message']['chat']['id'];
-        $message_id = $update['message']['message_id'];
+        $chat_id = $message['chat']['id'];
+        $message_id = $message['message_id'];
         $text = 'Select track:';
         $inline_keyboard_key = array();
         foreach ($this->getLinks() as $name => $link) {
@@ -69,6 +69,6 @@ class Album extends Audio
         }
         $resp = array ('chat_id' => $chat_id, 'text' => $text, 'reply_to_message_id' => $message_id,
             'reply_markup' => array('inline_keyboard' => $inline_keyboard_key));
-        $bot->postSend('sendMessage', $resp);
+        $api->postSend('sendMessage', $resp);
     }
 }

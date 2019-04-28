@@ -57,16 +57,16 @@ class Video extends Media
         }
     }
 
-    public function send($bot, $update, $caption)
+    public function send($api, $message, $caption)
     {
-        $chat_id = $update['message']['chat']['id'];
-        $message_id = $update['message']['message_id'];
-        $message = '';
+        $chat_id = $message['chat']['id'];
+        $message_id = $message['message_id'];
+        $text = '';
         foreach ($this->getLinks() as $name => $link) {
-            $message .= $name . ': ' . $link . "\n";
+            $text .= $name . ': ' . $link . "\n";
         }
-        $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $message
+        $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $text
         , 'disable_web_page_preview' => true);
-        $bot->postSend('sendMessage', $resp);
+        $api->postSend('sendMessage', $resp);
     }
 }

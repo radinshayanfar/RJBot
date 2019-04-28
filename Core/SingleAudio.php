@@ -37,18 +37,18 @@ class SingleAudio extends Audio
     }
 
 
-    public function send($bot, $update, $caption)
+    public function send($api, $message, $caption)
     {
         $document = reset($this->getLinks());
-        $chat_id = $update['message']['chat']['id'];
-        $message_id = $update['message']['message_id'];
+        $chat_id = $message['chat']['id'];
+        $message_id = $message['message_id'];
         if ($this->hostFetchURL == self::MP3_HOST) {
             $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'document' => $document,
                 'caption' => $caption);
-            $bot->postSend('sendDocument', $resp);
+            $api->postSend('sendDocument', $resp);
         }
         $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $document
         , 'disable_web_page_preview' => true);
-        $bot->postSend('sendMessage', $resp);
+        $api->postSend('sendMessage', $resp);
     }
 }
