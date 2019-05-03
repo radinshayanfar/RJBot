@@ -34,7 +34,12 @@ class Action
         }
     }
 
-    private function messageProcess() {
+    /**
+     * This method will be invoked whenever sent message is a message not a callback query or etc.
+     * Checks if it's text message and creates new TextMessage object to process it
+     */
+    private function messageProcess()
+    {
         if (!isset($this->update['message']['text'])) {
             $chat_id = $this->update['message']['chat']['id'];
             $resp = array('chat_id' => $chat_id, 'text' => 'Please send a Radio Javan media link.');
@@ -45,7 +50,12 @@ class Action
         new TextMessage($this->update['message'], $this->api, $this->db);
     }
 
-    private function callbackQueryProcess() {
+    /**
+     * This method will be invoked whenever sent message is a callback query not a message or etc.
+     * Creates new CallbackQuery object to process it
+     */
+    private function callbackQueryProcess()
+    {
         new CallbackQuery($this->update['callback_query'], $this->api, $this->db);
     }
 

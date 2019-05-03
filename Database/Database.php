@@ -20,6 +20,11 @@ class Database
             throw new Exception('Unable to connect to database');
     }
 
+    /**
+     * Counts every user messages sent to bot and put it in database
+     * Counted users are in subs table in database
+     * @param $update array Decoded update array
+     */
     public function updateUserMessageCount($update)
     {
         if (isset($update['callback_query'])) {
@@ -42,7 +47,12 @@ class Database
         }
     }
 
-    public function autoIncrementStart()
+
+    /**
+     * Get next row id in tracks table
+     * @return int next row id
+     */
+    public function autoIncrementStart(): int
     {
         $query = 'SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "rjbot" AND TABLE_NAME = "tracks"';
         $r = @mysqli_query($this->dbConnection, $query);
@@ -50,6 +60,11 @@ class Database
         return $row['AUTO_INCREMENT'];
     }
 
+    /**
+     * Finds id's corresponding link in tracks table
+     * @param $id int track's id
+     * @return string track's link
+     */
     public function getTrackLinkByID($id): string
     {
         $query = "SELECT link FROM tracks WHERE id = {$id} LIMIT 1";
@@ -58,10 +73,12 @@ class Database
         return $row['link'];
     }
 
+    /**
+     * @param $links array Tracks' link to be added to database in tracks table
+     */
     public function addTracksLink($links)
     {
-        foreach ($links as $track => $link)
-        {
+        foreach ($links as $track => $link) {
             $query = "INSERT INTO tracks (link) VALUES ('{$link}')";
             $r = @mysqli_query($this->dbConnection, $query);
         }

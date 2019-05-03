@@ -7,6 +7,9 @@ namespace Helper;
 final class Helper
 {
 
+    /**
+     * Closes client connection to continue processing in background
+     */
     public static function closeConnection()
     {
         ignore_user_abort(true);

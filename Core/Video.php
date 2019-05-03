@@ -1,6 +1,7 @@
 <?php
 
 namespace Core;
+
 use Exception;
 use Helper\StringHelper;
 
@@ -46,13 +47,9 @@ class Video extends Media
         }
     }
 
-    /**
-     * Generate $links with links
-     */
     protected function generateLinks()
     {
-        foreach ($this->qualitiesURL as $quality => $link)
-        {
+        foreach ($this->qualitiesURL as $quality => $link) {
             $this->links[$quality] = $this->host . $link;
         }
     }

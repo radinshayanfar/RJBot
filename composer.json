@@ -1,5 +1,10 @@
 {
   "config": {
     "optimize-autoloader": true
+  },
+  "require": {
+    "ext-json": "*",
+    "ext-curl": "*",
+    "ext-mysqli": "*"
   }
 }

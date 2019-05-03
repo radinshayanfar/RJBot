@@ -40,7 +40,7 @@ class TextMessage
                 break;
 
             default:
-                $this->downloader();
+                $this->extract();
                 break;
         }
     }
@@ -59,11 +59,12 @@ class TextMessage
         $this->api->webhookSend('sendMessage', $resp);
     }
 
+
     /**
-     *
-     * @param $url string
-     * @return string
-     * @throws Exception
+     * Determines media type based on url
+     * @param $url string Redirected url
+     * @return string one of MediaType constants
+     * @throws Exception if the host is not RadioJavan's host
      */
     private function determineType($url): string
     {
@@ -76,7 +77,10 @@ class TextMessage
         throw new Exception('Can\'t get media.');
     }
 
-    private function downloader()
+    /**
+     * Extracts and send media
+     */
+    private function extract()
     {
         $originalText = $this->message['text'];
         $chat_id = $this->message['chat']['id'];

@@ -2,7 +2,9 @@
 
 
 namespace Core;
+
 use Exception;
+use TelegramAPI;
 
 include_once('URLRedirect.php');
 
@@ -63,8 +65,16 @@ abstract class Media
         return $this->links;
     }
 
+    /**
+     * Generates media download url and put in links array
+     */
     abstract protected function generateLinks();
 
+    /**
+     * @param $api TelegramAPI Telegram API object
+     * @param $message array User sent message decoded to array
+     * @param string $caption Documents caption
+     */
     abstract public function send($api, $message, $caption = '@RJ_DownloadBot');
 
 }

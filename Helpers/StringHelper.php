@@ -23,7 +23,8 @@ final class StringHelper
      * @param $var_pos integer offset
      * @return bool|string String between quotes
      */
-    public static function betweenQuotes($input, $var_pos) {
+    public static function betweenQuotes($input, $var_pos)
+    {
         $pos1 = strpos($input, "'", $var_pos);
         $pos2 = strpos($input, "'", $pos1 + 1);
         return substr($input, $pos1 + 1, $pos2 - $pos1 - 1);

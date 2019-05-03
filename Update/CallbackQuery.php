@@ -32,6 +32,9 @@ class CallbackQuery
         $this->processRequest();
     }
 
+    /**
+     * Answers callback query
+     */
     private function answerCallbackQuery() {
         $callback_query_id = $this->callback_query['id'];
         $resp = array('callback_query_id' => $callback_query_id, 'text' => 'Sending. Please wait...'
@@ -39,6 +42,9 @@ class CallbackQuery
         $this->api->postSend('answerCallbackQuery', $resp);
     }
 
+    /**
+     * Get link from database by its id and creates new Media object to process it
+     */
     private function processRequest()
     {
         $data= $this->callback_query['data'];

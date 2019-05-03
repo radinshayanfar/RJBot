@@ -2,6 +2,7 @@
 
 
 namespace Core;
+
 use Exception;
 
 include_once('Audio.php');
@@ -37,11 +38,13 @@ class Album extends Audio
         $this->id = $id;
     }
 
+    /**
+     * Generates album's tracks media page url
+     */
     protected function generateLinks()
     {
 //        $path = substr($this->currentMP3URL, 0, strrpos($this->currentMP3URL, '/'));
-        foreach ($this->tracksNames as $track)
-        {
+        foreach ($this->tracksNames as $track) {
             $this->links[$track] = 'https://www.radiojavan.com/mp3s/mp3/' . $track;
         }
     }
@@ -67,7 +70,7 @@ class Album extends Audio
         foreach ($this->getLinks() as $name => $link) {
             $inline_keyboard_key[] = [['text' => str_replace('-', ' ', $name), 'callback_data' => $this->auto_increment_start++]];
         }
-        $resp = array ('chat_id' => $chat_id, 'text' => $text, 'reply_to_message_id' => $message_id,
+        $resp = array('chat_id' => $chat_id, 'text' => $text, 'reply_to_message_id' => $message_id,
             'reply_markup' => array('inline_keyboard' => $inline_keyboard_key));
         $api->postSend('sendMessage', $resp);
     }

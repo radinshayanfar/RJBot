@@ -2,6 +2,7 @@
 
 
 namespace Core;
+
 use Exception;
 
 include_once('Audio.php');
@@ -33,7 +34,7 @@ class SingleAudio extends Audio
     protected function generateLinks()
     {
         $readableName = str_replace('-', ' ', $this->id);
-        $this->links[$readableName] = $this->host . '/media/' . $this->currentMP3URL. '.mp3';
+        $this->links[$readableName] = $this->host . '/media/' . $this->currentMP3URL . '.mp3';
     }
 
 

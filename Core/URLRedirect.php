@@ -6,7 +6,7 @@ namespace Core;
 
 class URLRedirect
 {
-    private $rawURL ;
+    private $rawURL;
     private $redirectedURL;
     private $data;
 
@@ -23,7 +23,7 @@ class URLRedirect
     /**
      * @return string URL redirected to
      */
-    public function getRedirectedURL() : string
+    public function getRedirectedURL(): string
     {
         return $this->redirectedURL;
     }
@@ -31,11 +31,16 @@ class URLRedirect
     /**
      * @return string Data received from URL
      */
-    public function getData() : string
+    public function getData(): string
     {
         return $this->data;
     }
 
+    /**
+     * Follows $rawURL redirects upto 3 times
+     * Puts retrieved data to $data
+     * Puts last url to $redirectedURL
+     */
     private function URLRedirecting()
     {
         $ch = curl_init();
