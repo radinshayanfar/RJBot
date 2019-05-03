@@ -4,6 +4,8 @@
 namespace Core;
 
 
+use Exception;
+
 class URLRedirect
 {
     private $rawURL;
@@ -13,6 +15,7 @@ class URLRedirect
     /**
      * URLRedirect constructor.
      * @param $rawURL string URL to be followed
+     * @throws Exception If curl error occurred
      */
     public function __construct($rawURL)
     {
@@ -40,6 +43,7 @@ class URLRedirect
      * Follows $rawURL redirects upto 3 times
      * Puts retrieved data to $data
      * Puts last url to $redirectedURL
+     * @throws Exception If curl error occurred
      */
     private function URLRedirecting()
     {
@@ -53,17 +57,10 @@ class URLRedirect
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         $this->data = curl_exec($ch);
-        /* if(curl_errno($ch)){
-            throw new Exception(curl_error($ch));
-        } */
-        // if (curl_getinfo($ch, CURLINFO_HTTP_CODE) != 200) throw new Exception('Can\'t get media.');
+        if (curl_errno($ch) == CURLE_OPERATION_TIMEDOUT) throw new Exception('TimeOut error occurred. Please try again in a moment.');
+        if (curl_errno($ch)) throw new Exception('Unknown error occurred. Please try again in a moment.');
+        if (curl_getinfo($ch, CURLINFO_HTTP_CODE) != 200) throw new Exception('Can\'t get media.');
         $this->redirectedURL = curl_getinfo($ch)['url'];
-        // another redirect_url get
-        /* var_dump(curl_getinfo($ch, CURLINFO_EFFECTIVE_URL));
-        if (preg_match('~Location: (.*)~i', $result, $match)) {
-            $location = trim($match[1]);
-            var_dump($location);
-        } */
         return;
     }
 

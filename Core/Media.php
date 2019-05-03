@@ -52,7 +52,9 @@ abstract class Media
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         $result = curl_exec($ch);
-        if (curl_getinfo($ch, CURLINFO_HTTP_CODE) != 200) throw new Exception('An error occurred. Please try again in a minute');
+        if (curl_errno($ch) == CURLE_OPERATION_TIMEDOUT) throw new Exception('TimeOut error occurred. Please try again in a moment.');
+        if (curl_errno($ch)) throw new Exception('Unknown error occurred. Please try again in a moment.');
+//        if (curl_getinfo($ch, CURLINFO_HTTP_CODE) != 200) throw new Exception('Unknown error occurred. Please try again in a moment');
         curl_close($ch);
         $this->host = json_decode($result, true)['host'];
     }
