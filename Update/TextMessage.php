@@ -45,6 +45,9 @@ class TextMessage
         }
     }
 
+    /**
+     * Answers /start command
+     */
     private function start()
     {
         $chat_id = $this->message['chat']['id'];
@@ -56,11 +59,16 @@ class TextMessage
         $this->api->webhookSend('sendMessage', $resp);
     }
 
-    private function determineType($rawURL): string
+    /**
+     *
+     * @param $url string
+     * @return string
+     * @throws Exception
+     */
+    private function determineType($url): string
     {
-        $url = new URLRedirect($rawURL);
-        if (!URLHelper::isHostEquals($url->getRedirectedURL(), 'www.radiojavan.com')) throw new Exception('Not a RadioJavan link.');
-        $path = parse_url($url->getRedirectedURL(), PHP_URL_PATH);
+        if (!URLHelper::isHostEquals($url, 'www.radiojavan.com')) throw new Exception('Not a RadioJavan link.');
+        $path = parse_url($url, PHP_URL_PATH);
         if (StringHelper::startsWith($path, '/mp3s/mp3/')) return MediaType::MUSIC;
         if (StringHelper::startsWith($path, '/videos/video/')) return MediaType::VIDEO;
         if (StringHelper::startsWith($path, '/podcasts/podcast/')) return MediaType::PODCAST;
@@ -83,11 +91,13 @@ class TextMessage
 
         try {
             $mediaType = '';
-            if (URLHelper::validateURL($originalText))
-                $mediaType = $this->determineType($originalText);
+            $url = null;
+            if (URLHelper::validateURL($originalText)) {
+                $url = new URLRedirect($originalText);
+                $mediaType = $this->determineType($url->getRedirectedURL());
+            }
             else
                 throw new Exception('Can\'t get media.');
-            $url = new URLRedirect($originalText);
 //            $caption = '@RJ_DownloadBot';
             $media = null;
             if ($mediaType == MediaType::MUSIC) {
