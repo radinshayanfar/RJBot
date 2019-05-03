@@ -48,8 +48,8 @@ class CallbackQuery
     private function processRequest()
     {
         $data= $this->callback_query['data'];
-        $url = new URLRedirect($this->db->getTrackLinkByID($data));
         try {
+            $url = new URLRedirect($this->db->getTrackLinkByID($data));
             $media = new SingleAudio($url, SingleAudio::MP3_HOST);
             $media->send($this->api, $this->callback_query['message']['reply_to_message']);
         } catch (Exception $e) {

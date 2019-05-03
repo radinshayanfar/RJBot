@@ -64,13 +64,18 @@ class Database
      * Finds id's corresponding link in tracks table
      * @param $id int track's id
      * @return string track's link
+     * @throws Exception
      */
     public function getTrackLinkByID($id): string
     {
         $query = "SELECT link FROM tracks WHERE id = {$id} LIMIT 1";
         $r = @mysqli_query($this->dbConnection, $query);
-        $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
-        return $row['link'];
+        if (mysqli_num_rows($r) > 0) {
+            $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+            return $row['link'];
+        } else {
+            throw new Exception('Links expired. Please resend the link to extract tracks.');
+        }
     }
 
     /**
@@ -78,10 +83,11 @@ class Database
      */
     public function addTracksLink($links)
     {
+        $query = "INSERT INTO tracks (link) VALUES ";
         foreach ($links as $track => $link) {
-            $query = "INSERT INTO tracks (link) VALUES ('{$link}')";
-            $r = @mysqli_query($this->dbConnection, $query);
+            $query .= "('{$link}'),";
         }
+        $r = @mysqli_query($this->dbConnection, rtrim($query, ", "));
     }
 
 }
