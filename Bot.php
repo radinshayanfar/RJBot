@@ -7,6 +7,7 @@ header("Content-Type: application/json");
 define('API_TOKEN', file_get_contents('TOKEN'));
 
 require_once('TelegramAPI.php');
+require_once('Sendable.php');
 require_once('./Database/DatabaseConfig.php');
 require_once('./Database/Database.php');
 require_once('Helpers/DebugHelper.php');

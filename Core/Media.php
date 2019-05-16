@@ -4,12 +4,12 @@
 namespace Core;
 
 use Exception;
-use TelegramAPI;
+use Sendable;
 
 include_once('URLRedirect.php');
 
 
-abstract class Media
+abstract class Media implements Sendable
 {
     protected $id;
     protected $url;
@@ -71,12 +71,5 @@ abstract class Media
      * Generates media download url and put in links array
      */
     abstract protected function generateLinks();
-
-    /**
-     * @param $api TelegramAPI Telegram API object
-     * @param $message array User sent message decoded to array
-     * @param string $caption Documents caption
-     */
-    abstract public function send($api, $message, $caption = '@RJ_DownloadBot');
 
 }

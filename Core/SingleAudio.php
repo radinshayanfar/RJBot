@@ -4,12 +4,14 @@
 namespace Core;
 
 use Exception;
+use TelegramAPI;
 
 include_once('Audio.php');
 
 
 class SingleAudio extends Audio
 {
+    const CAPTION = '@RJ_DownloadBot';
 
     /**
      * SingleAudio constructor.
@@ -37,15 +39,18 @@ class SingleAudio extends Audio
         $this->links[$readableName] = $this->host . '/media/' . $this->currentMP3URL . '.mp3';
     }
 
-
-    public function send($api, $message, $caption = '@RJ_DownloadBot')
+    /**
+     * @param $api TelegramAPI Telegram API object
+     * @param $message array User sent message decoded to array
+     */
+    public function send($api, $message)
     {
         $document = reset($this->getLinks());
         $chat_id = $message['chat']['id'];
         $message_id = $message['message_id'];
         if ($this->hostFetchURL == self::MP3_HOST) {
             $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'document' => $document,
-                'caption' => $caption);
+                'caption' => self::CAPTION);
             $api->postSend('sendDocument', $resp);
         }
         $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'text' => $document

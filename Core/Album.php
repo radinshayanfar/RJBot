@@ -4,6 +4,7 @@
 namespace Core;
 
 use Exception;
+use TelegramAPI;
 
 include_once('Audio.php');
 
@@ -61,7 +62,11 @@ class Album extends Audio
         }
     }
 
-    public function send($api, $message, $caption = '@RJ_DownloadBot')
+    /**
+     * @param $api TelegramAPI Telegram API object
+     * @param $message array User sent message decoded to array
+     */
+    public function send($api, $message)
     {
         $chat_id = $message['chat']['id'];
         $message_id = $message['message_id'];
