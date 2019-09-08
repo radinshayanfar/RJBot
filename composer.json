@@ -5,6 +5,7 @@
   "require": {
     "ext-json": "*",
     "ext-curl": "*",
-    "ext-mysqli": "*"
+    "ext-mysqli": "*",
+    "ext-dom": "*"
   }
 }

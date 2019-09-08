@@ -15,7 +15,8 @@ $update = json_decode($content, true);
 try {
     $db = new Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     $db->updateUserMessageCount($update);
-} catch (Exception $e) {}
+} catch (Exception $e) {
+}
 
 $api = new TelegramAPI(API_TOKEN);
 

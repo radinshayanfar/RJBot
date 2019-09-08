@@ -17,10 +17,10 @@ class URLRedirect
      * @param $rawURL string URL to be followed
      * @throws Exception If curl error occurred
      */
-    public function __construct($rawURL)
+    public function __construct($rawURL, $headers = null)
     {
         $this->rawURL = $rawURL;
-        $this->URLRedirecting();
+        $this->URLRedirecting($headers);
     }
 
     /**
@@ -45,7 +45,7 @@ class URLRedirect
      * Puts last url to $redirectedURL
      * @throws Exception If curl error occurred
      */
-    private function URLRedirecting()
+    private function URLRedirecting($headers)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->rawURL);
@@ -56,6 +56,8 @@ class URLRedirect
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        if (is_array($headers))
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->data = curl_exec($ch);
         if (curl_errno($ch) == CURLE_OPERATION_TIMEDOUT) throw new Exception('TimeOut error occurred. Please try again in a moment.');
         if (curl_errno($ch)) throw new Exception('Unknown error occurred. Please try again in a moment.');

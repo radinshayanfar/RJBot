@@ -49,9 +49,8 @@ class CallbackQuery
     {
         $data= $this->callback_query['data'];
         try {
-            $url = new URLRedirect($this->db->getTrackLinkByID($data));
-            $media = new SingleAudio($url, SingleAudio::MP3_HOST);
-            $media->send($this->api, $this->callback_query['message']['reply_to_message']);
+            $this->callback_query['message']['text'] = $this->db->getTrackLinkByID($data);
+            new TextMessage($this->callback_query['message'], $this->api, $this->db);
         } catch (Exception $e) {
             $text = $e->getMessage();
             $resp = array('chat_id' => $this->callback_query['message']['chat']['id'],
