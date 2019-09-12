@@ -40,6 +40,10 @@ class TextMessage
                 $this->start();
                 break;
 
+            case '/help':
+                $this->help();
+                break;
+
             default:
                 $this->extract();
                 break;
@@ -54,12 +58,26 @@ class TextMessage
         $chat_id = $this->message['chat']['id'];
         $user_FName = $this->message['chat']['first_name'];
         $text = "Hello {$user_FName}!\n";
-        $text .= "I can help you download RadioJavan.com medias.\n";
-        $text .= "Just send media's link from Radio Javan website or application to me!";
+        $text .= "I can help you download media from RadioJavan.com.\n";
+        $text .= "Send /help for manual";
         $resp = array('chat_id' => $chat_id, 'text' => $text, 'disable_web_page_preview' => true);
         $this->api->webhookSend('sendMessage', $resp);
     }
 
+    /**
+     * Answers /help command
+     */
+    private function help()
+    {
+        $chat_id = $this->message['chat']['id'];
+        $text = "There are two ways to use me:\n";
+        $text .= "1. Sending media link from RadioJavan website or application.\n";
+        $text .= "2. Typing media or artist name to me and I'll search RadioJavan for results.\n\n";
+        $text .= "Keep in note currently supported media are:\n";
+        $text .= "Musics, Albums, Podcasts and Videos";
+        $resp = array('chat_id' => $chat_id, 'text' => $text, 'disable_web_page_preview' => true);
+        $this->api->webhookSend('sendMessage', $resp);
+    }
 
     /**
      * Determines media type based on url
@@ -137,6 +155,10 @@ class TextMessage
         $query = $this->message['text'];
         $chat_id = $this->message['chat']['id'];
         $message_id = $this->message['message_id'];
+        $NO_RESULT_TEXT = "No Search Results\n\nPlease note:
+1- Keywords must be exactly typed as RadioJavan website.
+2- I can only search name of media, not lyrics.
+3- Keywords are in English characters.";
 
         $url = new URLRedirect('https://www.radiojavan.com/');
         $rj_web_cookie = StringHelper::extractSetCookies($url->getData())['_rj_web'];
@@ -171,11 +193,11 @@ class TextMessage
                         $links['Album: ' . $media->artist . ' - ' . $media->album] = 'https://www.radiojavan.com' . $media->link;
                         break;
                 }
-                if(count($links) >= 10)
+                if (count($links) >= 10)
                     break;
             }
             if (count($links) == 0) {
-                throw new Exception('No Search Results');
+                throw new Exception($NO_RESULT_TEXT);
             }
 
             $auto_increment_start = $this->db->autoIncrementStart();
@@ -190,7 +212,7 @@ class TextMessage
                 'reply_markup' => array('inline_keyboard' => $inline_keyboard_key));
             $this->api->postSend('sendMessage', $resp);
         } else {
-            throw new Exception('No Search Results');
+            throw new Exception($NO_RESULT_TEXT);
         }
     }
 }
