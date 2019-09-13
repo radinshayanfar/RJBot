@@ -59,7 +59,7 @@ class TextMessage
         $user_FName = $this->message['chat']['first_name'];
         $text = "Hello {$user_FName}!\n";
         $text .= "I can help you download media from RadioJavan.com.\n";
-        $text .= "Send /help for manual";
+        $text .= "Get /help";
         $resp = array('chat_id' => $chat_id, 'text' => $text, 'disable_web_page_preview' => true);
         $this->api->webhookSend('sendMessage', $resp);
     }
@@ -73,7 +73,7 @@ class TextMessage
         $text = "There are two ways to use me:\n";
         $text .= "1. Sending media link from RadioJavan website or application.\n";
         $text .= "2. Typing media or artist name to me and I'll search RadioJavan for results.\n\n";
-        $text .= "Keep in note currently supported media are:\n";
+        $text .= "Keep note that currently supported media are:\n";
         $text .= "Musics, Albums, Podcasts and Videos";
         $resp = array('chat_id' => $chat_id, 'text' => $text, 'disable_web_page_preview' => true);
         $this->api->webhookSend('sendMessage', $resp);
