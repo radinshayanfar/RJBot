@@ -100,10 +100,5 @@ composer.phar
 
 # End of https://www.gitignore.io/api/composer
 
-# Bot API Token
-TOKEN
-
-# Database connection configuration
-Database/DatabaseConfig.php
-
+# Bot API Token and Database connection configuration
 .env
