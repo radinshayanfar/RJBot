@@ -7,7 +7,6 @@ use Helper\StringHelper;
 use TelegramAPI;
 
 include_once('Media.php');
-include_once('../Helpers/StringHelper.php');
 
 class Video extends Media
 {

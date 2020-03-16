@@ -6,7 +6,6 @@ namespace Core;
 use Helper\StringHelper;
 
 include_once('Media.php');
-include_once('../Helpers/StringHelper.php');
 
 
 abstract class Audio extends Media
