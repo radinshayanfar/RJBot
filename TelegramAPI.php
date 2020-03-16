@@ -79,7 +79,7 @@ class TelegramAPI
         $response = json_decode($response, true);
 
         if (isset($response['description'])) {
-            error_log("Request was unsuccessful: {$response['description']}\n");
+            error_log($response['description'] . "\n");
         }
 
         //$response = $response['result'];

@@ -30,6 +30,7 @@ echo "Enter complete url to project directory in order to set webhook url in Tel
 echo "[Leave it blank to ignore]\n";
 $url = trim(fgets(STDIN));
 if ($url) {
+    echo "Setting webhook...\n";
     $api = new TelegramAPI($_ENV['TOKEN']);
     $api->postSend('setWebhook', ['url' => $url . '/Bot.php']);
 }
