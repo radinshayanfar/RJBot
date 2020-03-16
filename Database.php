@@ -54,7 +54,7 @@ class Database
      */
     public function autoIncrementStart(): int
     {
-        $query = 'SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "rjbot" AND TABLE_NAME = "tracks"';
+        $query = 'SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "' . $_ENV['DB_NAME'] . '" AND TABLE_NAME = "tracks"';
         $r = @mysqli_query($this->dbConnection, $query);
         $row = mysqli_fetch_array($r);
         return $row['AUTO_INCREMENT'];
