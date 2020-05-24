@@ -56,6 +56,7 @@ class URLRedirect
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0');
         if (is_array($headers))
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->data = curl_exec($ch);
