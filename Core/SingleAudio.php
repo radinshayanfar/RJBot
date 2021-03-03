@@ -49,7 +49,7 @@ class SingleAudio extends Audio
         $chat_id = $message['chat']['id'];
         $message_id = $message['message_id'];
         if ($this->hostFetchURL == self::MP3_HOST) {
-            $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'document' => $document,
+            $resp = array('chat_id' => $chat_id, 'reply_to_message_id' => $message_id, 'document' => $document . '?v=' . mt_rand(1_000_000, 9_999_999),
                 'caption' => self::CAPTION);
             $api->postSend('sendDocument', $resp);
         }
