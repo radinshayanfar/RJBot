@@ -41,7 +41,7 @@ class TelegramAPI
      */
     function postSend($method, $action = array())
     {
-        define("API_URL", 'https://api.telegram.org/bot' . $this->token . '/');
+        $API_URL = 'https://api.telegram.org/bot' . $this->token . '/';
 
         foreach ($action as $key => &$val) {
             // encoding to JSON array action, for example reply_markup
@@ -49,7 +49,7 @@ class TelegramAPI
                 $val = json_encode($val);
             }
         }
-        $url = API_URL . $method . '?' . http_build_query($action);
+        $url = $API_URL . $method . '?' . http_build_query($action);
         $handle = curl_init($url);
 
         curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 5);

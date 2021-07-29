@@ -45,7 +45,8 @@ class SingleAudio extends Audio
      */
     public function send($api, $message)
     {
-        $document = reset($this->getLinks());
+        $links = $this->getLinks();
+        $document = reset($links);
         $chat_id = $message['chat']['id'];
         $message_id = $message['message_id'];
         if ($this->hostFetchURL == self::MP3_HOST) {
