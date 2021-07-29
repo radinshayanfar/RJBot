@@ -42,7 +42,8 @@ class Action
     {
         if (!isset($this->update['message']['text'])) {
             $chat_id = $this->update['message']['chat']['id'];
-            $resp = array('chat_id' => $chat_id, 'text' => 'Please send a Radio Javan media link.');
+            $message_id = $this->update['message']['message_id'];
+            $resp = array('chat_id' => $chat_id, 'text' => $GLOBALS["_STR"]["not_text"], 'reply_to_message_id' => $message_id);
             $this->api->webhookSend('sendMessage', $resp);
             return;
         }

@@ -57,9 +57,7 @@ class TextMessage
     {
         $chat_id = $this->message['chat']['id'];
         $user_FName = $this->message['chat']['first_name'];
-        $text = "Hello {$user_FName}!\n";
-        $text .= "I can help you download media from RadioJavan.com.\n";
-        $text .= "Get /help";
+        $text = sprintf($GLOBALS["_STR"]["COMMANDS"]["start"], $user_FName);
         $resp = array('chat_id' => $chat_id, 'text' => $text, 'disable_web_page_preview' => true);
         $this->api->webhookSend('sendMessage', $resp);
     }
@@ -70,11 +68,7 @@ class TextMessage
     private function help()
     {
         $chat_id = $this->message['chat']['id'];
-        $text = "There are two ways to use me:\n";
-        $text .= "1. Sending media link from RadioJavan website or application.\n";
-        $text .= "2. Typing media or artist name to me and I'll search RadioJavan for results.\n\n";
-        $text .= "Keep note that currently supported media are:\n";
-        $text .= "Musics, Albums, Podcasts and Videos";
+        $text = $GLOBALS["_STR"]["COMMANDS"]["help"];
         $resp = array('chat_id' => $chat_id, 'text' => $text, 'disable_web_page_preview' => true);
         $this->api->webhookSend('sendMessage', $resp);
     }
@@ -87,13 +81,13 @@ class TextMessage
      */
     private function determineType($url): string
     {
-        if (!URLHelper::isHostEquals($url, 'www.radiojavan.com')) throw new Exception('Not a RadioJavan link.');
+        if (!URLHelper::isHostEquals($url, 'www.radiojavan.com')) throw new Exception($GLOBALS["_STR"]["ERRORS"]["no_rj"]);
         $path = parse_url($url, PHP_URL_PATH);
         if (StringHelper::startsWith($path, '/mp3s/mp3/')) return MediaType::MUSIC;
         if (StringHelper::startsWith($path, '/videos/video/')) return MediaType::VIDEO;
         if (StringHelper::startsWith($path, '/podcasts/podcast/')) return MediaType::PODCAST;
         if (StringHelper::startsWith($path, '/mp3s/album/')) return MediaType::ALBUM;
-        throw new Exception('Can\'t get media.');
+        throw new Exception($GLOBALS["_STR"]["ERRORS"]["unsupported_media"]);
     }
 
     /**
@@ -155,10 +149,7 @@ class TextMessage
         $query = $this->message['text'];
         $chat_id = $this->message['chat']['id'];
         $message_id = $this->message['message_id'];
-        $NO_RESULT_TEXT = "No Search Results\n\nPlease note:
-1- Keywords must be exactly typed as RadioJavan website.
-2- I can only search name of media, not lyrics.
-3- Keywords are in English characters.";
+        $NO_RESULT_TEXT = $GLOBALS["_STR"]["no_result"];
 
         $url = new URLRedirect('https://www.radiojavan.com/');
         $rj_web_cookie = StringHelper::extractSetCookies($url->getData())['_rj_web'];
@@ -203,7 +194,7 @@ class TextMessage
             $auto_increment_start = $this->db->autoIncrementStart();
             $this->db->addTracksLink($links);
 
-            $text = 'Search results:';
+            $text = 'Results:';
             $inline_keyboard_key = array();
             foreach ($links as $name => $link) {
                 $inline_keyboard_key[] = [['text' => $name, 'callback_data' => $auto_increment_start++]];

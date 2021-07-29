@@ -70,7 +70,7 @@ class Album extends Audio
     {
         $chat_id = $message['chat']['id'];
         $message_id = $message['message_id'];
-        $text = 'Select track:';
+        $text = 'Tracks:';
         $inline_keyboard_key = array();
         foreach ($this->getLinks() as $name => $link) {
             $inline_keyboard_key[] = [['text' => str_replace('-', ' ', $name), 'callback_data' => $this->auto_increment_start++]];

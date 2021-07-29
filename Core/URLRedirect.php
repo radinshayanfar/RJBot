@@ -60,11 +60,10 @@ class URLRedirect
         if (is_array($headers))
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->data = curl_exec($ch);
-        if (curl_errno($ch) == CURLE_OPERATION_TIMEDOUT) throw new Exception('TimeOut error occurred. Please try again in a moment.');
-        if (curl_errno($ch)) throw new Exception('Unknown error occurred. Please try again in a moment.');
-        if (curl_getinfo($ch, CURLINFO_HTTP_CODE) != 200) throw new Exception('Can\'t get media.');
+        if (curl_errno($ch) == CURLE_OPERATION_TIMEDOUT) throw new Exception($GLOBALS["_STR"]["ERRORS"]["timeout"]);
+        if (curl_errno($ch)) throw new Exception($GLOBALS["_STR"]["ERRORS"]["unknown"]);
+        if (curl_getinfo($ch, CURLINFO_HTTP_CODE) != 200) throw new Exception($GLOBALS["_STR"]["ERRORS"]["cant_get"]);
         $this->redirectedURL = curl_getinfo($ch)['url'];
-        return;
     }
 
 

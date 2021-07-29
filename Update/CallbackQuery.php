@@ -37,7 +37,7 @@ class CallbackQuery
      */
     private function answerCallbackQuery() {
         $callback_query_id = $this->callback_query['id'];
-        $resp = array('callback_query_id' => $callback_query_id, 'text' => 'Sending. Please wait...'
+        $resp = array('callback_query_id' => $callback_query_id, 'text' => $GLOBALS["_STR"]["sending"]
                     , 'cache_time' => 3);
         $this->api->postSend('answerCallbackQuery', $resp);
     }

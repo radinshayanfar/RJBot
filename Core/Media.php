@@ -53,13 +53,13 @@ abstract class Media implements Sendable
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0');
         $result = curl_exec($ch);
-        if (curl_errno($ch) == CURLE_OPERATION_TIMEDOUT) throw new Exception('TimeOut error occurred. Please try again in a moment.');
-        if (curl_errno($ch)) throw new Exception('Unknown error occurred. Please try again in a moment.');
+        if (curl_errno($ch) == CURLE_OPERATION_TIMEDOUT) throw new Exception($GLOBALS["_STR"]["ERRORS"]["timeout"]);
+        if (curl_errno($ch)) throw new Exception($GLOBALS["_STR"]["ERRORS"]["unknown"]);
 //        if (curl_getinfo($ch, CURLINFO_HTTP_CODE) != 200) throw new Exception('Unknown error occurred. Please try again in a moment');
         curl_close($ch);
         $this->host = json_decode($result, true)['host'];
         if ($this->host === null) {
-            throw new Exception('Unable to get host address. Try again later.');
+            throw new Exception($GLOBALS["_STR"]["ERRORS"]["get_host_error"]);
         }
     }
 
