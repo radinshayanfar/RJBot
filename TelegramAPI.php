@@ -72,14 +72,15 @@ class TelegramAPI
         curl_close($handle);
 
         if ($http_code != 200) {
-            error_log("Request has failed with error {$response['error_code']}: {$response['description']}\n");
+//            \Helper\DebugHelper::dump_to_file($action, "dump.txt");
+            error_log("Request has failed with error ({$response})\n");
             return false;
         }
 
         $response = json_decode($response, true);
 
         if (isset($response['description'])) {
-            error_log($response['description'] . "\n");
+            error_log($response . "\n");
         }
 
         //$response = $response['result'];
