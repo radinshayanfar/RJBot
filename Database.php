@@ -74,7 +74,7 @@ class Database
             $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
             return $row['link'];
         } else {
-            throw new Exception('Links expired. Please resend the link to extract tracks.');
+            throw new Exception($GLOBALS["_STR"]["ERRORS"]["expired"]);
         }
     }
 

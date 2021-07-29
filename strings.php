@@ -9,6 +9,7 @@ Music, Album, Podcast, and Video.",
         "unknown" => "Unknown error occurred. Please try again in a moment.",
         "get_host_error" => "Unable to get host address. Try again later.",
         "cant_get" => "Can't get media.",
+        "expired" => "Search results has been expired. Please resend the link to extract tracks.",
     ],
 
     "COMMANDS" => [
