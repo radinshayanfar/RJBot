@@ -21,7 +21,10 @@ You can search and download RadioJavan's media via this bot. Send /help to get h
 - send the phrase you want to search to this bot.  
 
 Currently supported media types are:
-Music, Album, Podcast, and Video."
+Music, Album, Podcast, and Video.
+
+In case of any problems, feel free to contact me:
+me@rshayanfar.ir"
     ],
 
     "no_result" => "Nothing found :(
