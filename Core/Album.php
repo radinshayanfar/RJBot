@@ -26,19 +26,10 @@ class Album extends Audio
         $this->hostFetchURL = Audio::MP3_HOST;
         $this->auto_increment_start = $auto_increment_start;
         Media::__construct($url);
-        // TODO: looks redundant
         Audio::__construct();
-//        $this->processID();
 //        $this->processHost();
         $this->processTracks();
         $this->generateLinks();
-    }
-
-    // TODO: looks redundant. should be checked.
-    protected function processID()
-    {
-        $id = substr($this->currentMP3URL, strrpos($this->currentMP3URL, '/') + 1);
-        $this->id = $id;
     }
 
     /**
@@ -46,7 +37,6 @@ class Album extends Audio
      */
     protected function generateLinks()
     {
-//        $path = substr($this->currentMP3URL, 0, strrpos($this->currentMP3URL, '/'));
         foreach ($this->tracksNames as $track) {
             $this->links[$track] = 'https://www.radiojavan.com/mp3s/mp3/' . $track;
         }

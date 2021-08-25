@@ -22,15 +22,14 @@ abstract class Audio extends Media
      */
     protected function __construct()
     {
-        $this->setupJson = $this->processRJCurrentMP3URL();
+        $this->setupJson = $this->getSetupJsonData();
     }
 
-    // TODO: name maybe should be changed
     /**
      * Sends ?setup=1 request to get track(s) info
      * @return bool|array currentMP3URL
      */
-    private function processRJCurrentMP3URL()
+    private function getSetupJsonData()
     {
         $csrf = StringHelper::getCSRFFromMeta($this->url->getData());
         $headers = [
