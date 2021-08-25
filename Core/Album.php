@@ -26,6 +26,7 @@ class Album extends Audio
         $this->hostFetchURL = Audio::MP3_HOST;
         $this->auto_increment_start = $auto_increment_start;
         Media::__construct($url);
+        // TODO: looks redundant
         Audio::__construct();
 //        $this->processID();
 //        $this->processHost();
@@ -33,6 +34,7 @@ class Album extends Audio
         $this->generateLinks();
     }
 
+    // TODO: looks redundant. should be checked.
     protected function processID()
     {
         $id = substr($this->currentMP3URL, strrpos($this->currentMP3URL, '/') + 1);
@@ -50,15 +52,14 @@ class Album extends Audio
         }
     }
 
+    /**
+     * Processes album tracks from ?setup=1 data
+     * Gets related attribute from json data and adds 'next' parts to $this->tracksNames
+     */
     private function processTracks()
     {
-        $data = $this->url->getData();
-        $var_pos = strpos($data, 'RJ.relatedMP3');
-        $opening_bracket = strpos($data, '[', $var_pos);
-        $semicolon_pos = strpos($data, ';', $var_pos);
-        $tracksArray = json_decode(substr($data, $opening_bracket, $semicolon_pos - $opening_bracket), true);
-        foreach ($tracksArray as $track) {
-            $this->tracksNames[] = $track['mp3'];
+        foreach ($this->setupJson['related'] as $track) {
+            $this->tracksNames[] = $track['next'];
         }
     }
 

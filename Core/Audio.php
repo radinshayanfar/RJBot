@@ -15,19 +15,20 @@ abstract class Audio extends Media
     const MP3_HOST = '/mp3s/mp3_host';
     const PODCAST_HOST = '/podcasts/podcast_host';
 
-    protected $currentMP3URL;
+    protected $setupJson;
 
     /**
      * Audio constructor.
      */
     protected function __construct()
     {
-        $this->currentMP3URL = $this->processRJCurrentMP3URL();
+        $this->setupJson = $this->processRJCurrentMP3URL();
     }
 
+    // TODO: name maybe should be changed
     /**
-     * Processes data and returns currentMP3URL field
-     * @return bool|string currentMP3URL
+     * Sends ?setup=1 request to get track(s) info
+     * @return bool|array currentMP3URL
      */
     private function processRJCurrentMP3URL()
     {
@@ -52,10 +53,10 @@ abstract class Audio extends Media
 //        if (curl_getinfo($ch, CURLINFO_HTTP_CODE) != 200) throw new Exception('Unknown error occurred. Please try again in a moment');
         curl_close($ch);
 
-        $currentMP3URL = json_decode($result, true)['currentMP3Url'];
-        if ($currentMP3URL === null) {
-            throw new Exception($GLOBALS["_STR"]["ERRORS"]["get_mp3_url_error"]);
+        $setupJson = json_decode($result, true);
+        if ($setupJson === null) {
+            throw new Exception($GLOBALS["_STR"]["ERRORS"]["get_setup_error"]);
         }
-        return $currentMP3URL;
+        return $setupJson;
     }
 }

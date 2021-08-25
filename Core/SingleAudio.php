@@ -13,6 +13,8 @@ class SingleAudio extends Audio
 {
     const CAPTION = '@RJ_DownloadBot';
 
+    protected $currentMP3URL;
+
     /**
      * SingleAudio constructor.
      * @param $url URLRedirect Redirect followed object
@@ -24,6 +26,7 @@ class SingleAudio extends Audio
         $this->hostFetchURL = $hostFetchURL;
         Media::__construct($url);
         Audio::__construct();
+        $this->currentMP3URL = $this->setupJson['currentMP3Url'];
         $this->processID();
         $this->processHost();
         $this->generateLinks();
