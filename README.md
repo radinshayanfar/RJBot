@@ -1,8 +1,7 @@
 
 RJBot
 =====
-A simple Telegram bot to extract media links from Radio Javan share link.
-[Bot Link](https://t.me/RJ_DownloadBot)
+A simple Telegram bot to extract media links from Radio Javan share link. This bot was developed for educational purposes. 
 
 Installation
 --------------
@@ -13,7 +12,7 @@ Installation
   ```
  3. Install `curl` according to your PHP version.
   ```bash
-  $ sudo apt install php7.4-curl
+  $ sudo apt install php8.0-curl
   ```
  4. Create a MySQL database.
  5. Rename `.env.example` file to `.env` and edit it's content according to your configuration.
