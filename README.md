@@ -1,3 +1,6 @@
+> **Note**
+> 
+> RadioJavan has changed a lot since I first developed this bot, and I can't make time to maintain it. As a result, I'm archiving the bot.
 
 RJBot
 =====
